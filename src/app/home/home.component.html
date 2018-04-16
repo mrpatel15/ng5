@@ -2,32 +2,140 @@
   home works!
 </p> -->
 
-<div class="container color-dark">
+<div class="color-dark">
 	<div class="col">
-		<p>Add a bucket list item.</p>
+		<p>Filter By:</p>
 	</div>
 	
-	<div class="col">
-		<p>your bucket list ({{ itemCount }})</p>
+		<div class="flex-container" >
+		 <div fxLayout="row">
+		    <select fxFlex="10%" [(ngModel)]="selected_DID" (ngModelChange)="onSelect(selected_DID)">
+		        <option *ngFor="let option of options" 
+		                [value]="option"> 
+		          {{ option }}
+		        </option>
+		   </select>
+		   
+		   <!--  <select  fxFlex="10%" [(ngModel)]="selected_GL_ACCOUNT" (ngModelChange)="onSelect(selected_GL_ACCOUNT)">
+		        <option *ngFor="let option of options" 
+		                [value]="option"> 
+		          {{ option }}
+		        </option>
+		   </select>
+		   
+		    <select fxFlex="10%" [(ngModel)]="selected_SOURCE" (ngModelChange)="onSelect(selected_SOURCE)">
+		        <option *ngFor="let option of options" 
+		                [value]="option"> 
+		          {{ option }}
+		        </option>
+		   </select>
+		   
+		    <select fxFlex="10%" [(ngModel)]="selected_EX_CAT" (ngModelChange)="onSelect(selected_EX_CAT)">
+		        <option *ngFor="let option of options" 
+		                [value]="option"> 
+		          {{ option }}
+		        </option>
+		   </select>
+		   
+		   <select fxFlex="10%" [(ngModel)]="selected_EX_TYPE" (ngModelChange)="onSelect(selected_EX_TYPE)">
+		        <option *ngFor="let option of options" 
+		                [value]="option"> 
+		          {{ option }}
+		        </option>
+		   </select> -->
+		 </div>
 	</div>
+	
+	<!-- <div class="col">
+		<p>your bucket list ({{ itemCount }})</p>
+	</div> -->
 	
 </div>
 
-<div class="container color-light" [@goals]="goals.length">
+<!-- <div class="container color-light" [@goals]="goals.length">
 	<div class="col">
 		<p class="sm">Please use this form to add new bucket here!</p>
 		
+		
 		<form>
 			<input type="text" class="txt" name="name" placeholder="please type here..." [(ngModel)]="goalText"/>
-			<!-- <br><span> {{ goalText }}</span> -->
+			<br><span> {{ goalText }}</span>
 			<input type="submit" class="add-btn" [value]="addBtnText" (click)="addItem()" />
-			<!-- <input type="submit" class="del-btn" [value]="deleteBtnText" (click)="deleteItem()" /> -->
+			<input type="submit" class="del-btn" [value]="deleteBtnText" (click)="deleteItem()" />
 		</form>
 	
 	</div>
-	
+
 	<div class="col">
-		<p class="test-container" *ngFor="let goal of goals; let i = index" (click)="removeItem(i)"> {{ goal }} </p>
+		<p class="test-container" *ngFor="let goal of goals; let i = index" (click)="removeItem(i)"> {{ goal }} </p> 
+		
 	</div>
 		
-</div>
+</div> -->
+
+	<p></p>
+	<!-- <div>{{ selected_DID }}</div>
+	<div>{{ selected_GL_ACCOUNT }}</div>
+	<div>{{ selected_SOURCE }}</div>
+	<div>{{ selected_EX_CAT }}</div>
+	<div>{{ selected_EX_TYPE }}</div> -->
+	
+	<table class="table">
+	  <th>DID</th>
+	  <th>Issue Date</th>
+	  <th>Traveler Name</th>
+	  <th>Merchant</th>
+	  <th>Exp Report Title</th>
+	  <th>Amount</th>
+	  <th>Exception Category</th>
+	  <th>Exception Type</th>
+	  
+	  <tr *ngFor="let x of selectedData">
+	    <td>{{x?.id}}</td>
+	    <td>{{x?.date}}</td>
+	    <td>{{x?.traveler}}</td>	
+	    <td>{{x?.merchant}}</td>
+	    <td>{{x?.Exp_report_title}}</td>
+	     <td>{{x?.amount}}</td>
+	    <td>{{x?.Exception_Category}}</td>	 
+	    <td>{{x?.Exception_Type}}</td>
+	 
+	 <i class="fa fa-plus-square" aria-hidden="true"></i>
+	   	
+	   	
+	     <select [(ngModel)]="selected" (ngModelChange)="onSelect(selected)">
+		        <option *ngFor="let option of optionTest" 
+		                [value]="option"> 
+		          {{ option }}
+		        </option>
+		 </select>
+		
+		<button class="btn add"> Add </button>
+		 
+	  </tr>
+	</table>
+	   
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

@@ -1,13 +1,18 @@
 /* You can add global styles to this file, and also import other style files */
 
+/* font awesome gallery - https://fontawesome.com/icons?d=gallery */
+
+$fa-font-path: "../node_modules/font-awesome/fonts";
+@import '~font-awesome/scss/font-awesome.scss';
+
 @import url('https://fonts.googleapis.com/css?family=Raleway:300,700');
 
 body {
-	background: #2E9CE6;
+	background: #FFFFFF;
 	padding: 3em;
 	font-family: 'Raleway', 'Arial';
-	color: #fff;
-
+	color: #000000;
+	font-size: 0.8em;
 }
 ul {
 	list-style-type:none;
@@ -29,3 +34,4 @@ a {
 	text-decoration:none;
 
 }
+

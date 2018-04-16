@@ -1,10 +1,16 @@
 .container {
 	display: grid;
-	grid-template-columns: 50% auto;
+	grid-template-columns: 100% auto;
+}
+
+.icon-style {
+	font-size:1em; 
+	color:White; 
+	background:orange;
 }
 
 .col {
-	padding: .4em 1.3em;
+	padding: .2em 1.0em;
 
 }
 .color-dark {
@@ -14,6 +20,12 @@
 .color-light {
 	background: #57B3F1;
 }
+
+select {
+  margin: 10px;
+  line-height: 75px;
+}
+
 
 input.txt {
 	border: 0;
@@ -48,7 +60,66 @@ input.del-btn {
 .test-container {
 	background: #3FA0E1;
 	padding: .5em;
-	font-weight:bold;
 	cursor:pointer;
 	
 }
+
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+
+th, td {
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {background-color: #f2f2f2;}
+
+
+.table th, .table td { 
+  text-align: left; 
+  padding: 0.25em;
+   border-bottom: 1px solid #DDD;
+}
+
+.table tr { 
+  border-bottom: 1px solid #DDD;
+}
+td.edit-buttons { text-align: right; }
+
+button { 
+  border-radius: 3px; 
+  border: none; 
+  margin: 0 0.25em; 
+  transition: all 0.3s;
+  color: #ffffff;
+}
+
+button:hover { 
+  box-shadow: 0 0 4px rgba(3,3,3,0.8); 
+  opacity: 0.9;
+}
+
+button.add { background: #1E90FF; }
+
+
+@media screen and (max-width: 800px) {
+  tr { 
+    display: flex; 
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin: 0.5em 0;
+    border: 1px solid rgba(3,3,3,0.2);
+  }
+  td, th {
+    flex: 1 1 150px;
+    border: 0.5px solid rgba(3,3,3,0.2);
+  }
+ 
+}
+
+
+
