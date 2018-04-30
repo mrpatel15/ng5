@@ -1,12 +1,19 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
-import { DataService } from './data.service';
+import { HttpClientModule} from '@angular/common/http';
+import { DataService } from './services/data.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 
+import { LocalStorageModule } from '@ngx-pwa/local-storage';
+
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { ReactiveFormsModule } from '@angular/forms';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { ModalModule } from 'ngx-bootstrap';
+import { AlertModule } from 'ngx-bootstrap/alert';
+import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
@@ -26,9 +33,16 @@ import { FooterComponent } from './footer/footer.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule,
+    HttpClientModule,
     BrowserAnimationsModule,
-    FlexLayoutModule
+    ReactiveFormsModule,
+    FormsModule,
+    FlexLayoutModule,
+    LocalStorageModule,
+    BsDropdownModule.forRoot(),
+    ModalModule.forRoot(),
+    AlertModule.forRoot(),
+    TypeaheadModule.forRoot()
   ],
   providers: [DataService],
   bootstrap: [AppComponent]
