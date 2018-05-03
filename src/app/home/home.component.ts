@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { DataService } from '../services/data.service';
-import { LocalStorage } from '@ngx-pwa/local-storage';
+import {LocalStorage} from '@ngx-pwa/local-storage';
 
 import {BsModalService} from 'ngx-bootstrap/modal';
 import {BsModalRef} from 'ngx-bootstrap/modal/bs-modal-ref.service';
@@ -19,6 +19,7 @@ import 'rxjs/add/operator/catch';
 
 export class HomeComponent implements OnInit {
 
+
   user_role: string;
   fa_deadline: string;
   fa_days_left: number;
@@ -31,7 +32,7 @@ export class HomeComponent implements OnInit {
   comment_id: number;
   message: string;
 
- // add:Array<boolean> = [];
+  add: Array<boolean> = [];
 
   expand:Array<boolean> = [];
 
@@ -58,7 +59,6 @@ export class HomeComponent implements OnInit {
   selected_EX_TYPE;
 
 
-
   private selectedDataToPost = {};
   modalRef: BsModalRef;
 
@@ -67,7 +67,7 @@ export class HomeComponent implements OnInit {
     this.display();
   }
 
-  constructor(private _dataService: DataService, private modalService: BsModalService,protected localStorage: LocalStorage) {
+  constructor(private _dataService: DataService, private modalService: BsModalService, protected localStorage: LocalStorage) {
   }
 
 
@@ -84,7 +84,7 @@ export class HomeComponent implements OnInit {
 
           //console.log('this is deadline ',this.data.deadline);
 
-     }, (err) => console.log(err), );
+        }, (err) => console.log(err),);
   }
 
   display() {
@@ -92,100 +92,142 @@ export class HomeComponent implements OnInit {
         .subscribe((data: any) => {
           this.localStorage.getItem(this.data);
           this.data = data;
-          this.did = data.resources.did;
-          this.account = data.resources.account;
-          this.trans_src = data.resources.trans_src;
-          this.exception_category = data.resources.exception_category;
-          this.exception_type = data.resources.exception_type;
+          //this.did = data.resources.did;
+          this.did = data.resources.did.map((each, index) => {
+            return {id: index, name: each};
+          });
+          // this.account = data.resources.account;
+          this.account = data.resources.account.map((each, index) => {
+            return {id: index, name: each};
+          });
 
-          this.exception_type = data.resources.exception_type.Flight;
-          this.exception_type = data.resources.exception_type.Meal;
-          this.exception_type = data.resources.exception_type.Car;
-          this.exception_type = data.resources.exception_type.Hotel;
+          //this.trans_src = data.resources.trans_src;
+          this.trans_src = data.resources.trans_src.map((each, index) => {
+            return {id: index, name: each};
+          });
+
+          //this.exception_category = data.resources.exception_category;
+          this.exception_category = data.resources.exception_category.map((each, index) => {
+            return {id: index, name: each};
+          });
+          this.exception_category.push({id: this.exception_category.length, name: 'No Flag'});
+
+          //this.exception_type = data.resources.exception_type;
+          this.exception_type = data.resources.exception_type['Flight'].map((each, index) => {
+            return {id: index, name: each};
+          });
 
           this.transactions = data.transactions;
           this.comment_transactions = data.comment_trans;
           this.comments = data.comments;
 
           //console.log('this is comments trans...' + this.data.comment_trans);
-          // console.log(this.data.transactions);
+          // console.log('trans', this.transactions);
           // console.log('this is data' + this.data);
-     }, (err) => console.log(err), );
+        }, (err) => console.log(err),);
   }
 
- submitFinAnalystData() {
-   this.isFinancialAnalyst = false;
-   this.isBusinessLead = true;
-   this.isBusinessDirector = false;
- }
+  submitFinAnalystData(fa_submit_template: any) {
+    this.modalRef = this.modalService.show(fa_submit_template, {class: 'modal-lg'});
+   this._dataService.postFsDetails(this.selectedDataToPost)
+    // this.isFinancialAnalyst = false;
+    // this.isBusinessLead = true;
+    // this.isBusinessDirector = false;
+  }
 
- submitBusiLeadData() {
-   // this._dataService.postFsDetails(this.selectedDataToPost)
-   this.isFinancialAnalyst = false;
-   this.isBusinessLead = false;
-   this.isBusinessDirector = true;
- }
-
- submitFinDirector() {
-   // this._dataService.postFsDetails(this.selectedDataToPost)
-   this.isFinancialAnalyst = false;
-   this.isBusinessLead = false;
-   this.isBusinessDirector = false;
- }
+  // submitBusiLeadData() {
+  //   // this._dataService.postFsDetails(this.selectedDataToPost)
+  //   this.isFinancialAnalyst = false;
+  //   this.isBusinessLead = false;
+  //   this.isBusinessDirector = true;
+  // }
+  //
+  // submitFinDirector() {
+  //   // this._dataService.postFsDetails(this.selectedDataToPost)
+  //   this.isFinancialAnalyst = false;
+  //   this.isBusinessLead = false;
+  //   this.isBusinessDirector = false;
+  // }
 
  onSelectData(value, id){
    console.log('selected value', value, id);
    // this.selectedDataToPost[id] = value;
    Object.defineProperty (
     this.selectedDataToPost,
-    id,
-    { value: value, writable: true,}
+     id, {value: value, writable: true,}
   );
    console.log('Object is ', this.selectedDataToPost);
  }
 
 
    onSelect(val, field) {
+     console.log('on select called');
+     // this.transactions = this.data.transactions;
+
      if (field === 'did') {
-       if (val === 'none') {
+       console.log('val');
+       if (val === 'none' || val.length <= 0) {
            this.transactions = this.data.transactions;
        } else {
-         this.transactions = this.data.transactions.filter(x => x.did === val);
+         let array = val.map(each => this.did[each].name);
+         this.transactions = this.data.transactions.filter(x => array.includes(x.did));
        }
      }
      else if (field === 'ac') {
-       if (val === 'none') {
+       if (val === 'none' || val.length <= 0) {
            this.transactions = this.data.transactions;
        } else {
-         this.transactions = this.data.transactions.filter(x => x.account === val);
+         let array = val.map(each => this.account[each].name);
+         this.transactions = this.data.transactions.filter(x => array.includes(x.account));
        }
      }
      else if (field === 'so') {
-       if (val === 'none') {
+       if (val === 'none' || val.length <= 0) {
            this.transactions = this.data.transactions;
        } else {
-         this.transactions = this.data.transactions.filter(x => x.src_type === val);
+         //this.transactions = this.data.transactions.filter(x => x.src_type === val);
+         let array = val.map(each => this.trans_src[each].name);
+         this.transactions = this.data.transactions.filter(x => array.includes(x.src_type));
        }
      }
      else if (field === 'ec') {
-       if (val === 'none') {
+       if (val === 'none' || val.length <= 0) {
            this.transactions = this.data.transactions;
        } else {
-         this.exception_type = this.data.resources.exception_type[val];
-         this.transactions = this.data.transactions.filter(x => x.exception_cat === val);
+         //this.transactions = this.data.transactions.filter(x => x.exception_cat === val);
+         let name = val.map(each => this.exception_category[each].name)[0];
+         if (name === 'No Flag')
+           name = null;
+         this.transactions = this.data.transactions.filter(x => name === x.exception_cat);
+         if (name !== null)
+           this.exception_type = this.data.resources.exception_type[name].map((each, index) => {
+             return {id: index, name: each};
+           });
+         else
+           this.exception_type = [];
        }
      }
+
+     else if (field === 'et') {
+       if (val === 'none' || val.length <= 0) {
+         this.transactions = this.data.transactions;
+       } else {
+         //this.transactions = this.data.transactions.filter(x => x.exception_type === val);
+         let array = val.map(each => this.exception_type[each].name);
+         this.transactions = this.data.transactions.filter(x => array.includes(x.exception_type));
+       }
+
+     }
+
      this.expand = [];
-     // else if (field === 'et') {
-     //   this.transactions = this.data.transactions.filter(x => x.exception_type === val);
-     // }
+
   }
 
   searchMerchat(val) {
     if(val === ''){
       this.transactions = this.data.transactions;
     } else {
-      const reg = new RegExp(val,'i');
+      const reg = new RegExp(val, 'i');
       this.transactions = this.data.transactions.filter(x => x.merchant.search(reg) !== -1);
     }
   }
@@ -213,7 +255,7 @@ export class HomeComponent implements OnInit {
     this.message = 'Submitted!';
     this.modalRef.hide();
 
-    setTimeout(function() {
+    setTimeout(function () {
       this.showMsg = false;
       console.log(this.showMsg);
     }.bind(this), 4000);
@@ -223,13 +265,12 @@ export class HomeComponent implements OnInit {
       if (response) {
         localStorage.setItem('trans_id', this.data.transactions);
       }
-    })
-      // .catch( (error) => {
-      //     // handle error
-      //       console.log('Error:' + error)
-      //   });
+    });
+    // .catch( (error) => {
+    //     // handle error
+    //       console.log('Error:' + error)
+    //   });
   }
-
 
 
   saveProgressModal(saveTemplate: any) {
@@ -240,16 +281,23 @@ export class HomeComponent implements OnInit {
     this.modalRef.hide();
   }
 
-  goBack(){
+  goBack() {
     this.modalRef.hide();
   }
 
+  yesBtn() {
+    this.modalRef.hide();
+  }
+
+  noBtn() {
+    this.modalRef.hide();
+  }
 
 
 }
 
 
-interface transactions {
+export interface transactions {
     did: number;
     merchant: string;
     trans_status: number;
@@ -263,7 +311,7 @@ interface transactions {
 }
 
 
-interface comments {
+export interface comments {
     comment_id: number;
     commentdate: string;
     commentstr: string;
@@ -271,13 +319,13 @@ interface comments {
     userid: string;
 }
 
-interface deadline {
+export interface deadline {
     user_role: string;
     fa_deadline: string;
     fa_days_left: number;
 }
 
-interface resources {
+export interface resources {
   did: Array<string>;
   account: Array<string>;
   exception_type: string;

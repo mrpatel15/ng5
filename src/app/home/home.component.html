@@ -1,22 +1,23 @@
-<div *ngFor="let day of deadline; let i = index" class="deadline-content">
+<div *ngFor="let day of deadline" class="deadline-content">
   <div *ngIf="day?.user_role == 'fa'">
     <!--<h6 fxLayoutAlign="end">User Role:   {{ day?.user_role}}</h6>-->
-    <h6 fxLayoutAlign="end">Business Day Deadline:   {{ day?.fa_deadline}} </h6>
-    <h6 fxLayoutAlign="end">Days until Deadline:   {{ day?.fa_days_left}}</h6>
+    <h6 fxLayoutAlign="end">Business Day Deadline: {{ day?.fa_deadline}} </h6>
+    <h6 fxLayoutAlign="end">Days until Deadline: {{ day?.fa_days_left}}</h6>
   </div>
-</div><br>
+</div>
+<div class="employee-role">
+  <div *ngIf="!isBusinessLead && !isBusinessDirector">
+    <h3 fxLayoutAlign="center">Welcome Michael </h3><br>
+    <h4 fxLayoutAlign="center">Financial Analyst</h4>
+  </div>
+</div>
 
-
-<div  class="role-margin" *ngIf="!isBusinessLead && !isBusinessDirector">
-  <h2 fx-flex fxLayoutAlign="center">Welcome Mr. Patel </h2><br>
-  <h3 fx-flex fxLayoutAlign="center">Financial Analyst</h3>
-</div>
-<div class="role-margin"  *ngIf="!isBusinessDirector && !isFinancialAnalyst">
-  <h3 fx-flex fxLayoutAlign="center">Business Leader</h3>
-</div>
-<div  class="role-margin"  *ngIf="!isBusinessLead && !isFinancialAnalyst">
-  <h3 fx-flex fxLayoutAlign="center">Financial Director</h3>
-</div>
+<!--<div *ngIf="!isBusinessDirector && !isFinancialAnalyst">-->
+<!--<h4 fx-flex fxLayoutAlign="center">Business Leader</h4>-->
+<!--</div>-->
+<!--<div *ngIf="!isBusinessLead && !isFinancialAnalyst">-->
+<!--<h4 fx-flex fxLayoutAlign="center">Financial Director</h4>-->
+<!--</div>-->
 
 
 <alert *ngIf="showMsg" type="success" fxLayoutAlign="end">
@@ -25,59 +26,106 @@
 
 
 <!-- Filter by - Select Dropdown -->
-<div class="bg-dropdown">
+<div class="bg-dropdown" id="btn-size">
   <div class="col">
     <h5>Filter By:</h5>
   </div>
-  <div class="flex-container" >
+  <div class="flex-container">
     <div fxLayout="row">
 
-      <select fxFlex="12%" [(ngModel)]="selectedDid" (ngModelChange)="onSelect(selectedDid, 'did')">
-        <option [value]="DID" disabled selected> DID </option>
-        <option *ngFor="let d of did" [value]="d">{{ d }}</option>
-        <option value="none">All</option>
-      </select>
+      <!--<select fxFlex="12%" [(ngModel)]="selectedDid" (ngModelChange)="(onSelect(selectedDid, 'did')">-->
+      <!--<option [value]="DID" disabled selected> DID</option>-->
+      <!--<option *ngFor="let d of did" [value]="d">{{ d }}</option>-->
+      <!--<option value="none">All</option>-->
+      <!--</select>-->
 
-      <select  fxFlex="12%" [(ngModel)]="selected_GL_ACCOUNT" (ngModelChange)="onSelect(selected_GL_ACCOUNT, 'ac')">
-        <option [value]="ACCOUNT"  disabled> GL Account </option>
-        <option *ngFor="let acc of account" [value]="acc">  {{ acc }} </option>
-        <option value="none">All</option>
-      </select>
-      <select fxFlex="12%" [(ngModel)]="selected_SOURCE" (ngModelChange)="onSelect(selected_SOURCE, 'so')">
-        <option  [value]="SOURCE" disabled> Source </option>
-        <option *ngFor="let tp of trans_src" [value]="tp">   {{ tp }} </option>
-        <option value="none">All</option>
-      </select>
-      <select fxFlex="12%" [(ngModel)]="selected_EX_CAT" (ngModelChange)="onSelect(selected_EX_CAT, 'ec')">
-        <option [value]="EXCEPTION_CATEGORY" disabled> Exception Category </option>
-        <option *ngFor="let cat of exception_category" [value]="cat">  {{ cat }} </option>
-        <option value="none">All</option>
-      </select>
-      <select fxFlex="12%" [(ngModel)]="selected_EX_TYPE" (ngModelChange)="onSelect(selected_EX_TYPE, 'et')">
-        <option [value]="EXCEPTION_TYPE" disabled> Exception Type </option>
-        <option  *ngFor="let exp of exception_type" [value]="exp">  {{ exp }} </option>
-      </select>
-      <div class="col-md-2">
-        <input type="text" class="search-form" (input)="searchMerchat(merchants.value)" #merchants name="searchString" placeholder="Search by Merchant">
+      <!--<ss-multiselect-dropdown [settings]="{dynamicTitleMaxItems: 0}" [texts]="{defaultTitle: 'DID'}" [options]="did"-->
+      <!--[(ngModel)]="selectedDid" (ngModelChange)="onSelect($event, 'did')"></ss-multiselect-dropdown>-->
+
+
+      <ss-multiselect-dropdown
+        [settings]="{dynamicTitleMaxItems: 0,  enableSearch: true, checkedStyle: 'fontawesome', showUncheckAll: true}"
+        [texts]="{defaultTitle: 'DID'}" [options]="did"
+        [(ngModel)]="selectedDid" (ngModelChange)="onSelect($event, 'did')"></ss-multiselect-dropdown>
+
+      <!--<select fxFlex="12%" [(ngModel)]="selected_GL_ACCOUNT" (ngModelChange)="onSelect(selected_GL_ACCOUNT, 'ac')">-->
+      <!--<option [value]="GL_Account" disabled> GL Account</option>-->
+      <!--<option *ngFor="let acc of account" [value]="acc"> {{ acc }}</option>-->
+      <!--<option value="none">All</option>-->
+      <!--</select>-->
+
+      <ss-multiselect-dropdown [settings]="{dynamicTitleMaxItems: 0, checkedStyle: 'fontawesome', showUncheckAll: true}"
+                               [texts]="{defaultTitle: 'GL Account'}"
+                               [options]="account" [(ngModel)]="selected_GL_ACCOUNT"
+                               (ngModelChange)="onSelect($event, 'ac')"></ss-multiselect-dropdown>
+
+
+      <!--<select fxFlex="12%" [(ngModel)]="selected_SOURCE" (ngModelChange)="onSelect(selected_SOURCE, 'so')">-->
+      <!--<option [value]="Source" disabled> Source</option>-->
+      <!--<option *ngFor="let tp of trans_src" [value]="tp"> {{ tp }}</option>-->
+      <!--<option value="none">All</option>-->
+      <!--</select>-->
+
+      <ss-multiselect-dropdown [settings]="{dynamicTitleMaxItems: 0, checkedStyle: 'fontawesome', showUncheckAll: true}"
+                               [texts]="{defaultTitle: 'Source'}"
+                               [options]="trans_src" [(ngModel)]="selected_SOURCE"
+                               (ngModelChange)="onSelect($event, 'so')"></ss-multiselect-dropdown>
+
+
+      <!--<select fxFlex="12%" [(ngModel)]="selected_EX_CAT" (ngModelChange)="onSelect(selected_EX_CAT, 'ec')">-->
+      <!--<option [value]="Exception_Category" disabled> Exception Category</option>-->
+      <!--<option *ngFor="let cat of exception_category" [value]="cat"> {{ cat }}</option>-->
+      <!--<option value="none">All</option>-->
+      <!--</select>-->
+
+      <ss-multiselect-dropdown [settings]="{dynamicTitleMaxItems: 0, selectionLimit: 1, checkedStyle: 'fontawesome'}"
+                               [texts]="{defaultTitle: 'Exception Category'}" [options]="exception_category"
+                               [(ngModel)]="selected_EX_CAT"
+                               (ngModelChange)="onSelect($event, 'ec')"></ss-multiselect-dropdown>
+
+
+      <!--<select fxFlex="12%" [(ngModel)]="selected_EX_TYPE" (ngModelChange)="onSelect(selected_EX_TYPE, 'et')">-->
+      <!--<option [value]="Exception_Type" disabled> Exception Type</option>-->
+      <!--<option *ngFor="let exp of exception_type" [value]="exp"> {{ exp }}</option>-->
+      <!--</select>-->
+
+      <ss-multiselect-dropdown [settings]="{dynamicTitleMaxItems: 0, checkedStyle: 'fontawesome'}" [texts]="{defaultTitle: 'Exception Type'}"
+                               [options]="exception_type" [(ngModel)]="selected_EX_TYPE"
+                               (ngModelChange)="onSelect($event, 'et')"></ss-multiselect-dropdown>
+
+
+      <!--<div>-->
+      <!--<input type="text" class="search-form" (input)="searchMerchat(merchants.value)" #merchants name="searchString"-->
+      <!--placeholder="Search by Merchant">-->
+      <!--</div>-->
+
+      <div class="input-group search-container">
+        <div class="input-group-prepend">
+          <span class="input-group-text">
+            <i aria-hidden="true" class="fa fa-search"></i>
+          </span>
+        </div>
+        <input class="form-control" type="text" (input)="searchMerchat(merchants.value)" #merchants name="searchString"
+               placeholder="Search by Merchant...">
       </div>
+
     </div>
   </div>
 
 </div>
 
 
-
 <p></p>
 <!-- *********  Table Data  ****-->
 <div class="flex-container">
   <table class="table">
-    <thead class="thead-light">
+    <thead class="thead-bg">
     <th></th>
     <th></th>
     <th>DID</th>
+    <th>Dept Name</th>
     <th>Date</th>
     <th>Emp Name</th>
-    <th>Dept Name</th>
     <th>Merchant</th>
     <th>Line Description</th>
     <th>Amount</th>
@@ -91,18 +139,19 @@
 
       <tr>
         <td>
-          <i class="fa icon-size" [ngClass]="{'fa-plus-square': !expand[i], 'fa-minus-square': expand[i]}" (click)="expand[i] = !expand[i]"></i>
+          <i class="fa icon-size" [ngClass]="{'fa-plus-square': !expand[i], 'fa-minus-square': expand[i]}"
+             (click)="expand[i] = !expand[i]"></i>
         </td>
         <td></td>
         <td>{{x?.did}}</td>
-        <td>{{x?.date_}}</td>
-        <td>{{x?.emp_name}}</td>
         <td>{{x?.department_name}}-Test</td>
-        <td>{{x?.merchant}}</td>
-        <td>{{x?.line_descr}}</td>
+        <td>{{x?.date_}}</td>
+        <td class="table-width">{{x?.emp_name}}</td>
+        <td class="table-width">{{x?.merchant}}</td>
+        <td class="table-width">{{x?.line_descr}}</td>
         <td>{{x?.amount}}</td>
         <td>{{x?.exception_cat}}</td>
-        <td>{{x?.exception_type}}</td>
+        <td class="table-width">{{x?.exception_type}}</td>
 
         <!--<td>  *** all exp category value **-->
         <!--<select (change)="onSelectData(element.value, x.trans_id)" #element>-->
@@ -111,11 +160,25 @@
         <!--<option value="none" attr.id="something" [selected]="x?.exception_cat===null">No Flag</option>-->
         <!--</select>-->
         <!--</td>-->
-        <td>
-          <select (change)="onSelectData(element.value, x.trans_id)" #element>
+
+        <td *ngIf="x?.src_type == 'pfs'">
+          <select class="form-control-sm" (change)="onSelectData(element.value, x.trans_id)" #element>
             <option value="Exception_Category" disabled> Exception Category</option>
-            <option [value]="x" [attr.id]="'something'" [selected]="x?.exception_cat">  {{ x?.exception_cat }} </option>
+            <option [value]="x" [attr.id]="'something'" [selected]="x?.exception_cat"> {{ x?.exception_cat }}</option>
+            <option value="none" attr.id="something" *ngIf="x?.traveltypedescription==null">Meal</option>
+            <option value="none" attr.id="something" *ngIf="x?.traveltypedescription==null">Miscellaneous</option>
             <option value="none" attr.id="something" [selected]="x?.exception_cat===null">No Flag</option>
+          </select>
+        </td>
+
+        <td *ngIf="x?.src_type == 'cwt'">
+          <select class="form-control-sm" (change)="onSelectData(element.value, x.trans_id)" #element>
+            <option value="Exception_Category" disabled> Exception Category</option>
+            <option [value]="x" [attr.id]="'something'" [selected]="x?.exception_cat"> {{ x?.exception_cat }}</option>
+            <option value="none" attr.id="something" [selected]="x?.exception_cat===null">No Flag</option>
+            <option value="none" attr.id="something" *ngIf="x?.exception_cat===null">Flight</option>
+            <option value="none" attr.id="something" *ngIf="x?.exception_cat===null">Car</option>
+            <option value="none" attr.id="something" *ngIf="x?.exception_cat===null">Hotel</option>
           </select>
         </td>
         <!-- start: comment boutton and modal -->
@@ -123,12 +186,14 @@
           <!-- <button class="'btn btn-primary btn-md'"  [class.my-class]="add[i]" (click)="add[i] = !add[i]">{{add[i] ? comment_transactions[x.trans_id] ? 'Comment '+ comment_transactions[x.trans_id]:'Comment': 'Comments'}} </button> -->
           <!-- <strong> {{add[i] ? '' : comment_transactions[x.trans_id] ? ' '+comment_transactions[x.trans_id] : ''}} 	</strong> -->
           <span class="fa-stack fa-1x" (click)="commentModal(template)">
-								<i class="fa fa-comment fa-6 fa-stack-2x icon-comment-size"></i>
+								<i *ngIf="comment_transactions[x.trans_id]" class="fa fa-comment fa-6 fa-stack-2x with-comment"></i>
+                <i *ngIf="!comment_transactions[x.trans_id]" class="fa fa-commenting fa-6 fa-stack-2x no-comment"></i>
 								<span class="fa fa-stack-1x">
 									<strong>  {{comment_transactions[x.trans_id] ? ' '+ comment_transactions[x.trans_id] : ''}} 	</strong>
 								</span>
-							</span>
+          </span>
         </td>
+
         <ng-template #template>
           <div class="modal-header">
             <h4 class="modal-title pull-left">Comments</h4>
@@ -140,25 +205,26 @@
             <div *ngFor="let cmt of comments;">
               <ol *ngIf="cmt?.trans_id == x.trans_id">
                 <li fxLayoutAlign="start">
-                  <strong> User Id:   &nbsp;</strong>  {{ cmt?.userid }}
+                  <strong> User Id: &nbsp;</strong> {{ cmt?.userid }}
                 </li>
                 <li fxLayoutAlign="start">
-                  <strong> User Name: &nbsp;</strong>  Test data
+                  <strong> User Name: &nbsp;</strong> Test data
                 </li>
                 <li fxLayoutAlign="start">
-                  <strong> Date:      &nbsp;</strong>  {{ cmt?.commentdate }}
+                  <strong> Date: &nbsp;</strong> {{ cmt?.commentdate }}
                 </li>
                 <li fxLayoutAlign="start">
-                  <strong> Comment:   &nbsp;</strong>  {{ cmt?.commentstr }}
+                  <strong> Comment: &nbsp;</strong> {{ cmt?.commentstr }}
                 </li>
               </ol>
             </div>
             <div style="margin:2em;">
-              <textarea type="text" name="addComment" placeholder="Please add comment here.." #text class="form-control text-area-style"></textarea>
+              <textarea type="text" name="addComment" placeholder="Please add comment here.." #text
+                        class="form-control text-area-style"></textarea>
               <br>
               <div>
                   <span class="btn-right">
-                     <button type="button" class="btn btn-sm btn-secondary"  (click)="decline()">Cancel</button>
+                     <button type="button" class="btn btn-sm btn-secondary" (click)="decline()">Cancel</button>
                      <button type="button" class="btn btn-success btn-sm" (click)="saveComment(text.value, x.trans_id)">Save</button>
                   </span>
               </div>
@@ -175,11 +241,12 @@
         <td>Travel Type Description</td>
         <td>Starting City</td>
         <td>Destination City</td>
-        <td>Ticket Reason</td>
+        <td>Travel Reason</td>
         <td>Lowest Fare amount</td>
-        <td>Ticket Purpose</td>
+        <td>Travel Purpose</td>
         <td>Ticket Used</td>
         <td>Ticket Number</td>
+        <td>Conference Name</td>
       </tr>
       <tr *ngIf="expand[i] && x?.src_type == 'cwt'" class="table-row-pink">
         <td>{{x?.startdate}}</td>
@@ -193,37 +260,43 @@
         <th class="highlight-content">{{x?.travelpurpose}}</th>
         <td class="highlight-content">{{x?.ticketsused}}</td>
         <td class="highlight-content">{{x?.ticketnumber}}</td>
+        <td>Conference name test</td>
       </tr>
       <!-- hidden row for PFS-->
       <tr *ngIf="expand[i] && x?.src_type == 'pfs'" class="table-row-red">
         <td>Transactions Date</td>
         <td>Account</td>
-        <td>Exp Report Title</td>
+        <td>Account Name</td>
+        <td>Exp Report Approver</td>
         <td>TXN location</td>
         <td>Expense Report ID</td>
         <td>Number Attendees</td>
         <td>Journal ID</td>
-        <td>Image Link</td>
+        <td>Exp Report Title</td>
+        <td>Receipt / Invoice ID</td>
       </tr>
       <tr *ngIf="expand[i] && x?.src_type == 'pfs'" class="table-row-pink">
         <td>{{x?.trans_dt}}</td>
         <td>{{x?.account}}</td>
-        <td>{{x?.expense_report_title}}</td>
+        <td>{{x?.accountName}} + Account Name + Test</td>
+        <td>+ test + approver+</td>
         <td>{{x?.txn_location}}</td>
         <td>{{x?.expense_report_id}}</td>
         <td class="highlight-content">{{x?.num_attendees}}</td>
         <td class="highlight-content">{{x?.journal_id}}</td>
+        <td>{{x?.expense_report_title}}</td>
         <td>
-          <a target="_blank" href="https://pulse.kdc.capitalone.com/welcome">Pulse page</a>
+          <a class="link-style" target="_blank" href="https://pulse.kdc.capitalone.com/welcome">View</a>
         </td>
       </tr>
     </ng-container>
     </tbody>
   </table>
   <div class="btn-position">
-    <button type="button" class="btn btn-dark" (click)="saveProgressModal(saveTemplate)"> Save progress </button>
+    <button type="button" class="btn btn-dark" (click)="saveProgressModal(saveTemplate)"> Save progress</button>
     <span>
-					<button *ngIf = "!isBusinessLead && !isBusinessDirector" type="button" class="btn btn-secondary" (click)="submitFinAnalystData()"> Submit to Business Lead </button>
+					<button *ngIf="!isBusinessLead && !isBusinessDirector" type="button" class="btn btn-secondary"
+                  (click)="submitFinAnalystData(fa_submit_template)"> Submit to Business Lead </button>
 					<button *ngIf = "isBusinessLead" type="button" class="btn btn-secondary" (click)="submitBusiLeadData()"> Submit to Finance Director </button>
 					<button *ngIf = "isBusinessDirector" type="button" class="btn btn-success" (click)="submitFinDirector()">Review & Complete</button>
 				</span>
@@ -233,8 +306,18 @@
     <div class="modal-body text-center">
       <h2 class="progress-text">Progress Saved!</h2>
       <h6 class="progress-content">Would you like to continue working on this or would you like to log out.</h6>
-      <span class="btn-right "><button type="button" class="btn btn-dark" (click)="goBack()" >Go Back</button>
-      <button type="button" class="btn btn-secondary" (click)="logout()" >Logout</button></span>
+      <span class="btn-right "><button type="button" class="btn btn-dark" (click)="goBack()">Go Back</button>
+      <button type="button" class="btn btn-secondary" (click)="logout()">Logout</button></span>
+    </div>
+  </ng-template>
+
+  <ng-template #fa_submit_template>
+    <div class="modal-body text-center">
+      <h2 class="progress-text">Confirm Submission</h2>
+      <h6 class="progress-content">Are you sure you would like to submit your review of the transaction data. Once you
+        click yes this can’t be undone.</h6>
+      <span class="btn-right "><button type="button" class="btn btn-dark" (click)="noBtn()">No</button>
+      <button type="button" class="btn btn-secondary" (click)="yesBtn()">Yes</button></span>
     </div>
   </ng-template>
 

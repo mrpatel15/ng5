@@ -1,12 +1,18 @@
 /* You can add global styles to this file, and also import other style files */
 
-$fa-font-path: "~/font-awesome/fonts";
-@import '~font-awesome/scss/font-awesome.scss';
-@import './node_modules/bootstrap/scss/bootstrap.scss';
+$fa-font-path: "../node_modules/font-awesome/fonts";
+//@import '~font-awesome/scss/font-awesome.scss';
+//@import '../node_modules/bootstrap/scss/bootstrap.scss';
+//@import '../node_modules/angular-bootstrap-md/scss/bootstrap/bootstrap.scss';
+//@import '../node_modules/angular-bootstrap-md/scss/mdb-free.scss';
 
 
 body {
 	background-color: #FFF;
-  padding: 2em;
-  font-size: 0.9em !important;
+  padding: 3em;
+  //font-size: 0.9em !important;
 }
+
+//input[type="checkbox"] {
+//  display: none !important;
+//}

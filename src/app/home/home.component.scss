@@ -10,13 +10,18 @@
 }
 
 .col {
-  padding: .5em 1.0em;
-  color: #fff;
+  padding: .5em .5em;
+  color: #000;
+  h5 {
+    font-weight: 500;
+  }
 }
 
 .bg-dropdown {
-  background-color: #007bff;
-  margin-top: 30px;
+  background-color: #FFF;
+  margin-top: 15px;
+  border: 1px solid #ccc;
+  border-radius: 0.4em;
 }
 
 .color-light {
@@ -24,27 +29,41 @@
 }
 
 .deadline-content {
-  padding-right: 1em;
-  margin-right: 1em;
-  color: #212529;
+  margin-top: 3.5em;
+  color: #08090d;
+  display: inline-block;
+  float: right;
 }
 
-.role-margin {
-  margin: 3em;
+.employee-role {
+  margin-top: 7em;
+  margin-bottom: 2em;
 }
 
 span.fa-stack.fa-1x {
   position: relative;
   display: inline-block;
-  width: 2.5em;
+  width: 2.7em;
   height: 2.0em;
   line-height: 2.8em;
   vertical-align: middle;
+  cursor: pointer;
 }
 
-.icon-comment-size {
+.btn-width-15 {
+  width: 15em;
+}
+
+.with-comment {
   font-size: 40px;
-  color: #ffc107;
+  color: #ffbf00;
+  cursor: pointer;
+}
+
+.no-comment {
+  font-size: 40px;
+  color: #00c851;
+  cursor: pointer;
 }
 
 select {
@@ -75,23 +94,27 @@ input.add-btn {
   cursor: pointer;
 }
 
-.search-form {
-  margin: 10px;
-  padding: .375rem .75rem;
-  font-size: 1em;
-  line-height: 1.5;
-  color: #495057;
-  background-color: #fff;
-  border: 1px solid #ced4da;
-  border-radius: .35rem;
-  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+.my-class {
+  color: #fff;
+
 }
 
+.table-width {
+  width: 15em;
+}
+
+.input-group {
+  width: 15em;
+  height: 2.9em;
+  margin-top: 5px;
+  margin-left: 1em;
+}
 
 table {
   border-collapse: collapse;
   width: 100%;
 }
+
 
 th, td {
   text-align: left;
@@ -100,7 +123,12 @@ th, td {
 
 td.highlight-content:hover {
   font-size: 1.2em;
-  background-color: #28a745;
+  background-color: Yellow;
+}
+
+.link-style {
+  color: #007bff;
+  text-decoration: underline;
 }
 
 tr:nth-child(even) {
@@ -129,27 +157,20 @@ button {
 }
 
 button:hover {
-  box-shadow: 0 0 4px rgba(3,3,3,0.8);
+  box-shadow: 0 0 4px rgba(3, 3, 3, 0.8);
   opacity: 0.9;
 }
 
-button.add {
-  background: #1E90FF;
-}
-
-.my-class {
-  color: #fb8c2cf7;
-  display: none;
-}
 
 .icon-size {
-  font-size: 30px;
+  font-size: 2.5rem;
   color: #fd7e14;
 }
 
 .progress-text {
   margin: 1em;
 }
+
 .progress-content {
   margin: 4em;
 }
@@ -160,8 +181,17 @@ button.add {
   margin-bottom: 150px !important;
 }
 
+.btn-secondary {
+  background-color: #6c757d !important;
+}
+
 .btn-right {
   float: right;
+}
+
+.thead-bg {
+  background-color: #6c757d;
+  color: #f8f9fa;
 }
 
 .table-row-red {
@@ -172,3 +202,4 @@ button.add {
 .table-row-pink {
   background-color: #dc35457a !important;
 }
+
